@@ -285,71 +285,6 @@
             font-weight: 800;
         }
 
-        .badge-thermometer {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 15px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            margin-top: 6px;
-        }
-
-        .badge-green { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.4); }
-        .badge-yellow { background: rgba(245, 158, 11, 0.15); color: var(--accent-gold); border: 1px solid rgba(245, 158, 11, 0.4); }
-        .badge-red { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.4); }
-
-        .action-row-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .secondary-btn {
-            background: var(--bg-input);
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.82rem;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .input-owned {
-            width: 45px;
-            padding: 6px 2px;
-            text-align: center;
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            border-radius: 6px;
-            font-weight: 700;
-        }
-
-        .input-price {
-            width: 90px;
-            padding: 8px;
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            color: var(--accent-gold);
-            font-weight: 800;
-            border-radius: 6px;
-            text-align: right;
-        }
-
-        .fav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.3rem;
-            cursor: pointer;
-        }
-        .fav-btn.active { color: var(--accent-gold); }
-
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
@@ -363,7 +298,6 @@
             .summary-box { padding: 10px; }
             .summary-box span { font-size: 0.7rem; }
             .summary-box strong { font-size: 1.2rem; }
-            .action-row-buttons { flex-direction: row; }
             table { font-size: 0.9rem; }
             th { font-size: 0.75rem; padding: 12px 8px; }
             td { padding: 12px 8px; }
@@ -384,10 +318,14 @@
                     <option value="horde">🔴 Horde</option>
                     <option value="fel">🟢 Fel</option>
                 </select>
-                <!-- SELECTOR DE IDIOMAS -->
-                <select id="lang-selector" style="width: auto;" title="Idioma / Language">
-                    <option value="es">ES</option>
-                    <option value="en">EN</option>
+                <!-- Selector con ES, EN, PT, FR, DE e IT -->
+                <select id="lang-selector" style="width: auto;" title="Idioma">
+                    <option value="es">🇪🇸 ES</option>
+                    <option value="en">🇺🇸 EN</option>
+                    <option value="pt">🇧🇷 PT</option>
+                    <option value="fr">🇫🇷 FR</option>
+                    <option value="de">🇩🇪 DE</option>
+                    <option value="it">🇮🇹 IT</option>
                 </select>
             </div>
         </header>
@@ -501,7 +439,7 @@
     </div>
 
     <script>
-        // Sistema de Traducción Idiomas (ES / EN)
+        // Diccionario completo con todos los idiomas (ES, EN, PT, FR, DE, IT)
         const translations = {
             es: {
                 title: "Guía de Profesiones y Economía WoW",
@@ -572,6 +510,146 @@
                 sessionClear: "Clear",
                 sessionReg: "Registered",
                 sessionCost: "Investment"
+            },
+            pt: {
+                title: "Guia de Profissões e Economia WoW",
+                donate: "☕ Doar",
+                adText: "[Espaço Publicitário / Google AdSense]",
+                navCalc: "🧮 Calculadora",
+                navBudget: "💰 Orçamento",
+                navFlips: "📈 Flips",
+                navSession: "📊 Sessão",
+                lblRegion: "Região:",
+                lblRealm: "Servidor de Jogo:",
+                optDefaultRealm: "Selecione seu servidor...",
+                lblCraftQty: "Quantidade:",
+                lblSearch: "Buscar Receita:",
+                searchPlaceholder: "Ex. Frasco, Gema...",
+                profAll: "Todas",
+                profFav: "⭐ Favoritas",
+                profAlc: "Alquimia",
+                profJew: "Joalheria",
+                profBs: "Ferraria",
+                profEnc: "Encantamento",
+                profLw: "Couraria",
+                profTail: "Alfaiataria",
+                profEng: "Engenharia",
+                lblRecipeSelect: "Receita Específica:",
+                optDefaultRecipe: "Selecione uma receita...",
+                calcBtn: "Calcular Lucros",
+                defaultText: "Selecione um servidor e uma receita...",
+                lblBudgetGold: "Ouro Disponível:",
+                btnRunBudget: "Buscar Lucrativas",
+                btnRunFlips: "Escanear Flips",
+                sessionTitle: "Resumo de Criação",
+                sessionClear: "Limpar",
+                sessionReg: "Registrados",
+                sessionCost: "Investimento"
+            },
+            fr: {
+                title: "Guide des Métiers et de l'Économie WoW",
+                donate: "☕ Faire un don",
+                adText: "[Espace Publicitaire / Google AdSense]",
+                navCalc: "🧮 Calculateur",
+                navBudget: "💰 Budget",
+                navFlips: "📈 Flips",
+                navSession: "📊 Session",
+                lblRegion: "Région :",
+                lblRealm: "Royaume :",
+                optDefaultRealm: "Sélectionnez votre royaume...",
+                lblCraftQty: "Quantité :",
+                lblSearch: "Rechercher Recette :",
+                searchPlaceholder: "Ex. Flacon, Gemme...",
+                profAll: "Toutes",
+                profFav: "⭐ Favoris",
+                profAlc: "Alchimie",
+                profJew: "Joaillerie",
+                profBs: "Forge",
+                profEnc: "Enchantement",
+                profLw: "Travail du cuir",
+                profTail: "Couture",
+                profEng: "Ingénierie",
+                lblRecipeSelect: "Recette Spécifique :",
+                optDefaultRecipe: "Sélectionnez une recette...",
+                calcBtn: "Calculer les Profits",
+                defaultText: "Sélectionnez un royaume et une recette...",
+                lblBudgetGold: "Or Disponible :",
+                btnRunBudget: "Trouver Rentables",
+                btnRunFlips: "Scanner Flips",
+                sessionTitle: "Résumé de Craft",
+                sessionClear: "Vider",
+                sessionReg: "Enregistrés",
+                sessionCost: "Investissement"
+            },
+            de: {
+                title: "Berufe und Wirtschaft Guide für WoW",
+                donate: "☕ Spenden",
+                adText: "[Werbebereich / Google AdSense]",
+                navCalc: "🧮 Rechner",
+                navBudget: "💰 Budget",
+                navFlips: "📈 Flips",
+                navSession: "📊 Sitzung",
+                lblRegion: "Region:",
+                lblRealm: "Realm:",
+                optDefaultRealm: "Wähle deinen Realm...",
+                lblCraftQty: "Anzahl:",
+                lblSearch: "Rezept Suchen:",
+                searchPlaceholder: "Z.B. Fläschchen, Edelstein...",
+                profAll: "Alle",
+                profFav: "⭐ Favoriten",
+                profAlc: "Alchemie",
+                profJew: "Juwelenschleifen",
+                profBs: "Schmiedekunst",
+                profEnc: "Verzauberkunst",
+                profLw: "Lederverarbeitung",
+                profTail: "Schneiderei",
+                profEng: "Ingenieurskunst",
+                lblRecipeSelect: "Spezifisches Rezept:",
+                optDefaultRecipe: "Wähle ein Rezept...",
+                calcBtn: "Gewinn Berechnen",
+                defaultText: "Wähle einen Realm und ein Rezept...",
+                lblBudgetGold: "Verfügbares Gold:",
+                btnRunBudget: "Finde Rentable",
+                btnRunFlips: "Flips Scannen",
+                sessionTitle: "Herstellungsübersicht",
+                sessionClear: "Leeren",
+                sessionReg: "Registriert",
+                sessionCost: "Investition"
+            },
+            it: {
+                title: "Guida alle Professioni e all'Economia di WoW",
+                donate: "☕ Dona",
+                adText: "[Spazio Pubblicitario / Google AdSense]",
+                navCalc: "🧮 Calcolatore",
+                navBudget: "💰 Budget",
+                navFlips: "📈 Flips",
+                navSession: "📊 Sessione",
+                lblRegion: "Regione:",
+                lblRealm: "Reame:",
+                optDefaultRealm: "Seleziona il tuo reame...",
+                lblCraftQty: "Quantità:",
+                lblSearch: "Cerca Ricetta:",
+                searchPlaceholder: "Es. Pozione, Gemma...",
+                profAll: "Tutte",
+                profFav: "⭐ Preferiti",
+                profAlc: "Alchimia",
+                profJew: "Jewelcrafting",
+                profBs: "Forgiatura",
+                profEnc: "Incantamento",
+                profLw: "Conciatura",
+                profTail: "Sartoria",
+                profEng: "Ingegneria",
+                lblRecipeSelect: "Ricetta Specifica:",
+                optDefaultRecipe: "Seleziona una ricetta...",
+                calcBtn: "Calcola Profitti",
+                defaultText: "Seleziona un reame e una ricetta...",
+                lblBudgetGold: "Oro Disponibile:",
+                btnRunBudget: "Trova Redditizie",
+                btnRunFlips: "Scansiona Flips",
+                sessionTitle: "Riepilogo Creazioni",
+                sessionClear: "Svuota",
+                sessionReg: "Registrati",
+                sessionCost: "Investimento"
             }
         };
 
