@@ -80,6 +80,7 @@
             gap: 6px;
             align-items: center;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         .donate-btn {
@@ -94,6 +95,8 @@
             display: inline-flex;
             align-items: center;
             gap: 4px;
+            flex: 1;
+            justify-content: center;
         }
 
         .ad-banner {
@@ -218,6 +221,7 @@
             margin-top: 20px;
             width: 100%;
             box-sizing: border-box;
+            overflow-x: hidden;
         }
 
         .table-responsive {
@@ -285,8 +289,49 @@
             font-weight: 800;
         }
 
+        .secondary-btn {
+            background: var(--bg-input);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.82rem;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         .tab-content { display: none; }
         .tab-content.active { display: block; }
+
+        /* Modal Legal (AdSense) */
+        .legal-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(6, 9, 19, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .legal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .legal-content h3 { color: var(--accent-gold); margin-top: 0; }
 
         @media (min-width: 768px) {
             body { padding: 30px; }
@@ -318,7 +363,6 @@
                     <option value="horde">🔴 Horde</option>
                     <option value="fel">🟢 Fel</option>
                 </select>
-                <!-- Selector con ES, EN, PT, FR, DE e IT -->
                 <select id="lang-selector" style="width: auto;" title="Idioma">
                     <option value="es">🇪🇸 ES</option>
                     <option value="en">🇺🇸 EN</option>
@@ -436,10 +480,41 @@
             </div>
             <div id="session-list" style="overflow-x: auto;"></div>
         </div>
+
+        <!-- FOOTER Y AFILIADO EXITLAG -->
+        <footer style="margin-top: 35px; border-top: 1px solid var(--border-color); padding-top: 20px; text-align: center; color: var(--text-muted); font-size: 0.78rem;">
+            <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95)); border: 1px solid rgba(245, 158, 11, 0.4); padding: 18px; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.5), inset 0 0 15px rgba(245, 158, 11, 0.05); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent-gold);"></div>
+                
+                <p style="margin: 0 0 6px 0; color: var(--accent-gold); font-weight: 800; font-size: 0.95rem; letter-spacing: 0.5px;" id="footer-ad-title">⚡ ¿Cansado del Lag en las Bandas y Mazmorras?</p>
+                <p style="margin: 0 0 14px 0; color: #cbd5e1; font-size: 0.85rem;" id="footer-ad-desc">Estabiliza tu conexión a los servidores de Blizzard con <strong style="color: #fff;">ExitLag</strong> y mejora tu rendimiento al tradear y craftear.</p>
+                
+                <a href="https://www.exitlag.com/refer/10374282" target="_blank" style="display: inline-block; background: linear-gradient(135deg, var(--accent-gold), #b45309); color: #060913; padding: 10px 20px; border-radius: 8px; font-weight: 800; text-decoration: none; font-size: 0.88rem; box-shadow: 0 4px 15px var(--accent-glow);" id="footer-ad-btn">
+                    🚀 Activar 20% de Descuento en ExitLag
+                </a>
+            </div>
+
+            <!-- ENLACES LEGALES (ADSENSE) -->
+            <div style="margin-bottom: 12px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <a href="#" onclick="openLegal('privacy'); return false;" style="color: var(--text-muted); text-decoration: underline;" id="link-privacy">Política de Privacidad</a>
+                <a href="#" onclick="openLegal('terms'); return false;" style="color: var(--text-muted); text-decoration: underline;" id="link-terms">Aviso Legal & Términos</a>
+            </div>
+
+            <p style="margin: 0;" id="footer-disclaimer">Guía de Profesiones y Economía WoW no está afiliado a Blizzard Entertainment. World of Warcraft es una marca registrada de Blizzard Entertainment, Inc.</p>
+        </footer>
+    </div>
+
+    <!-- MODAL LEGAL -->
+    <div id="legalModal" class="legal-modal">
+        <div class="legal-content">
+            <h3 id="legal-title">Título</h3>
+            <div id="legal-text">Contenido...</div>
+            <br>
+            <button onclick="closeLegal()" class="main-action-btn" style="padding: 8px;" id="btn-close-modal">Cerrar</button>
+        </div>
     </div>
 
     <script>
-        // Diccionario completo con todos los idiomas (ES, EN, PT, FR, DE, IT)
         const translations = {
             es: {
                 title: "Guía de Profesiones y Economía WoW",
@@ -474,7 +549,14 @@
                 sessionTitle: "Resumen de Crafteos",
                 sessionClear: "Vaciar",
                 sessionReg: "Registrados",
-                sessionCost: "Inversión"
+                sessionCost: "Inversión",
+                footerAdTitle: "⚡ ¿Cansado del Lag en las Bandas y Mazmorras?",
+                footerAdDesc: "Estabiliza tu conexión a los servidores de Blizzard con ExitLag y mejora tu rendimiento al tradear y craftear.",
+                footerAdBtn: "🚀 Activar 20% de Descuento en ExitLag",
+                linkPrivacy: "Política de Privacidad",
+                linkTerms: "Aviso Legal & Términos",
+                footerDisclaimer: "Guía de Profesiones y Economía WoW não está afiliado a Blizzard Entertainment. World of Warcraft es una marca registrada de Blizzard Entertainment, Inc.",
+                btnCloseModal: "Cerrar"
             },
             en: {
                 title: "WoW Professions & Economy Guide",
@@ -509,7 +591,14 @@
                 sessionTitle: "Crafting Summary",
                 sessionClear: "Clear",
                 sessionReg: "Registered",
-                sessionCost: "Investment"
+                sessionCost: "Investment",
+                footerAdTitle: "⚡ Tired of Lag in Raids and Dungeons?",
+                footerAdDesc: "Stabilize your connection to Blizzard servers with ExitLag and boost your trading and crafting performance.",
+                footerAdBtn: "🚀 Activate 20% Off ExitLag",
+                linkPrivacy: "Privacy Policy",
+                linkTerms: "Legal Notice & Terms",
+                footerDisclaimer: "WoW Professions & Economy Guide is not affiliated with Blizzard Entertainment. World of Warcraft is a registered trademark of Blizzard Entertainment, Inc.",
+                btnCloseModal: "Close"
             },
             pt: {
                 title: "Guia de Profissões e Economia WoW",
@@ -544,7 +633,14 @@
                 sessionTitle: "Resumo de Criação",
                 sessionClear: "Limpar",
                 sessionReg: "Registrados",
-                sessionCost: "Investimento"
+                sessionCost: "Investimento",
+                footerAdTitle: "⚡ Cansado de Lag em Raids e Masmorras?",
+                footerAdDesc: "Estabilize sua conexão com os servidores da Blizzard com o ExitLag e melhore seu desempenho ao negociar e criar.",
+                footerAdBtn: "🚀 Ativar 20% de Desconto no ExitLag",
+                linkPrivacy: "Política de Privacidade",
+                linkTerms: "Aviso Legal e Termos",
+                footerDisclaimer: "Guia de Profissões e Economia WoW não é afiliado à Blizzard Entertainment. World of Warcraft é uma marca registrada da Blizzard Entertainment, Inc.",
+                btnCloseModal: "Fechar"
             },
             fr: {
                 title: "Guide des Métiers et de l'Économie WoW",
@@ -579,7 +675,14 @@
                 sessionTitle: "Résumé de Craft",
                 sessionClear: "Vider",
                 sessionReg: "Enregistrés",
-                sessionCost: "Investissement"
+                sessionCost: "Investissement",
+                footerAdTitle: "⚡ Fatigué du Lag en Raid et Donjon ?",
+                footerAdDesc: "Stabilisez votre connexion aux serveurs Blizzard avec ExitLag et optimisez vos performances.",
+                footerAdBtn: "🚀 Activer 20% de Réduction sur ExitLag",
+                linkPrivacy: "Politique de Confidentialité",
+                linkTerms: "Mentions Légales",
+                footerDisclaimer: "Guide des Métiers et de l'Économie WoW n'est pas affilié à Blizzard Entertainment.",
+                btnCloseModal: "Fermer"
             },
             de: {
                 title: "Berufe und Wirtschaft Guide für WoW",
@@ -614,7 +717,14 @@
                 sessionTitle: "Herstellungsübersicht",
                 sessionClear: "Leeren",
                 sessionReg: "Registriert",
-                sessionCost: "Investition"
+                sessionCost: "Investition",
+                footerAdTitle: "⚡ Müde von Lag in Raids und Dungeons?",
+                footerAdDesc: "Stabilisiere deine Verbindung zu Blizzard-Servern mit ExitLag.",
+                footerAdBtn: "🚀 20% Rabatt auf ExitLag aktivieren",
+                linkPrivacy: "Datenschutz",
+                linkTerms: "Impressum & Bedingungen",
+                footerDisclaimer: "Berufe und Wirtschaft Guide für WoW ist nicht mit Blizzard Entertainment verbunden.",
+                btnCloseModal: "Schließen"
             },
             it: {
                 title: "Guida alle Professioni e all'Economia di WoW",
@@ -649,7 +759,14 @@
                 sessionTitle: "Riepilogo Creazioni",
                 sessionClear: "Svuota",
                 sessionReg: "Registrati",
-                sessionCost: "Investimento"
+                sessionCost: "Investimento",
+                footerAdTitle: "⚡ Stanco del Lag in Incursioni e Spedizioni?",
+                footerAdDesc: "Stabilizza la tua connessione ai server Blizzard con ExitLag.",
+                footerAdBtn: "🚀 Attiva il 20% di Sconto su ExitLag",
+                linkPrivacy: "Politica sulla Riservatezza",
+                linkTerms: "Note Legali",
+                footerDisclaimer: "Guida alle Professioni e all'Economia di WoW non è affiliato con Blizzard Entertainment.",
+                btnCloseModal: "Chiudi"
             }
         };
 
@@ -695,6 +812,39 @@
             document.getElementById('btn-clear-session').innerText = t.sessionClear;
             document.getElementById('session-lbl-reg').innerText = t.sessionReg;
             document.getElementById('session-lbl-cost').innerText = t.sessionCost;
+            document.getElementById('footer-ad-title').innerText = t.footerAdTitle;
+            document.getElementById('footer-ad-desc').innerHTML = t.footerAdDesc.replace('ExitLag', '<strong style="color: #fff;">ExitLag</strong>');
+            document.getElementById('footer-ad-btn').innerText = t.footerAdBtn;
+            document.getElementById('link-privacy').innerText = t.linkPrivacy;
+            document.getElementById('link-terms').innerText = t.linkTerms;
+            document.getElementById('footer-disclaimer').innerText = t.footerDisclaimer;
+            document.getElementById('btn-close-modal').innerText = t.btnCloseModal;
+        }
+
+        function openLegal(type) {
+            const modal = document.getElementById('legalModal');
+            const title = document.getElementById('legal-title');
+            const text = document.getElementById('legal-text');
+            const lang = langSelector.value;
+            
+            if (type === 'privacy') {
+                title.innerText = lang === 'en' ? "Privacy Policy" : (lang === 'pt' ? "Política de Privacidade" : "Política de Privacidad");
+                text.innerHTML = `
+                    <p>En este sitio web respetamos tu privacidad. Utilizamos servicios de terceros como Google AdSense para mostrar anuncios basados en tus visitas anteriores.</p>
+                    <p>Las cookies de publicidad de Google permiten mostrar anuncios basados en la navegación de los usuarios.</p>
+                `;
+            } else {
+                title.innerText = lang === 'en' ? "Legal Notice & Terms" : (lang === 'pt' ? "Aviso Legal e Termos" : "Aviso Legal y Términos");
+                text.innerHTML = `
+                    <p><strong>1. Propiedad Intelectual:</strong> Herramienta independiente creada para la comunidad de World of Warcraft. No está afiliada con Blizzard Entertainment.</p>
+                    <p><strong>2. Enlaces de Afiliados:</strong> Este sitio incluye enlaces de recomendación (ExitLag) por los cuales se puede percibir una comisión.</p>
+                `;
+            }
+            modal.style.display = 'flex';
+        }
+
+        function closeLegal() {
+            document.getElementById('legalModal').style.display = 'none';
         }
     </script>
 
