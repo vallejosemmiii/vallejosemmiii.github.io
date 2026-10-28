@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title id="app-title">Guía de Profesiones y Economía WoW</title>
+    
+    <!-- Script de Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6055882420759450"
+         crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --bg-main: #060913;
+            --bg-card: rgba(15, 23, 42, 0.95);
+            --bg-input: rgba(30, 41, 59, 0.85);
+            --border-color: rgba(51, 65, 85, 0.8);
+            --accent-gold: #f59e0b;
+            --accent-glow: rgba(245, 158, 11, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --green: #10b981;
+            --red: #ef4444;
+        }
+
+        body.theme-alliance { --accent-gold: #3b82f6; --accent-glow: rgba(59, 130, 246, 0.25); }
+        body.theme-horde { --accent-gold: #dc2626; --accent-glow: rgba(220, 38, 38, 0.25); }
+        body.theme-fel { --accent-gold: #10b981; --accent-glow: rgba(16, 185, 129, 0.25); }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 50% 10%, var(--accent-glow) 0%, transparent 60%),
+                radial-gradient(circle at 90% 90%, rgba(30, 58, 138, 0.15) 0%, transparent 50%),
+                linear-gradient(rgba(6, 9, 19, 0.92), rgba(6, 9, 19, 0.98));
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 10px;
+            min-height: 100vh;
+            box-sizing: border-box;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 14px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.35rem;
+            color: var(--accent-gold);
+            font-weight: 800;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .donate-btn {
+            background: linear-gradient(135deg, #e11d48, #be123c);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .ad-banner {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px dashed var(--border-color);
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-bottom: 15px;
+        }
+
+        select, input {
+            background: var(--bg-input);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            overflow-x: auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-gold);
+            background: var(--accent-glow);
+            border: 1px solid var(--accent-gold);
+        }
+
+        .realm-config-grid, .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .professions-nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .prof-btn {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 6px 10px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .prof-btn.active {
+            background: var(--accent-gold);
+            color: #060913;
+            border-color: var(--accent-gold);
+            font-weight: 800;
+        }
+
+        .main-action-btn {
+            background: linear-gradient(135deg, var(--accent-gold), #b45309);
+            color: #060913;
+            border: none;
+            padding: 12px;
+            font-weight: 800;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+
+        .recipe-card {
+            background: rgba(10, 15, 30, 0.85);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-gold);
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            min-width: 320px;
+            box-sizing: border-box;
+        }
+
+        th {
+            background: rgba(30, 41, 59, 0.95);
+            color: var(--text-muted);
+            text-align: left;
+            padding: 8px 6px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 8px 6px;
+            border-bottom: 1px solid var(--border-color);
+            word-break: break-word;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            background: rgba(6, 9, 19, 0.9);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            margin-top: 15px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .summary-box {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 8px 4px;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .summary-box span {
+            font-size: 0.62rem;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .summary-box strong {
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+
+        .badge-thermometer {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            margin-top: 6px;
+        }
+
+        .badge-green { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.4); }
+        .badge-yellow { background: rgba(245, 158, 11, 0.15); color: var(--accent-gold); border: 1px solid rgba(245, 158, 11, 0.4); }
+        .badge-red { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.4); }
+
+        .action-row-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .secondary-btn {
+            background: var(--bg-input);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.82rem;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .input-owned {
+            width: 45px;
+            padding: 6px 2px;
+            text-align: center;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .input-price {
+            width: 90px;
+            padding: 8px;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--accent-gold);
+            font-weight: 800;
+            border-radius: 6px;
+            text-align: right;
+        }
+
+        .fav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        .fav-btn.active { color: var(--accent-gold); }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Estilos para la ventana modal legal (AdSense) */
+        .legal-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(6, 9, 19, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .legal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .legal-content h3 { color: var(--accent-gold); margin-top: 0; }
+
+        @media (min-width: 768px) {
+            body { padding: 30px; }
+            .container { padding: 30px; border-radius: 18px; }
+            h1 { font-size: 1.8rem; }
+            .realm-config-grid { grid-template-columns: 1fr 2fr; }
+            .controls-grid { grid-template-columns: 2fr 1fr 1fr; }
+            .summary-grid { grid-template-columns: repeat(4, 1fr); padding: 15px; }
+            .summary-box { padding: 10px; }
+            .summary-box span { font-size: 0.7rem; }
+            .summary-box strong { font-size: 1.2rem; }
+            .action-row-buttons { flex-direction: row; }
+            table { font-size: 0.9rem; }
+            th { font-size: 0.75rem; padding: 12px 8px; }
+            td { padding: 12px 8px; }
+            .recipe-card { padding: 25px; }
+        }
+    </style>
+</head>
+<body class="theme-goblin">
+    
+    <div class="container">
+        <header>
+            <h1 id="app-title">Guía de Profesiones y Economía WoW</h1>
+            <div class="header-controls">
+                <a href="https://ko-fi.com/vallejosemmiiii" target="_blank" class="donate-btn">☕ Donar</a>
+                <select id="theme-selector" style="width: auto;" title="Tema Visual">
+                    <option value="goblin">🟡 Goblin</option>
+                    <option value="alliance">🔵 Alliance</option>
+                    <option value="horde">🔴 Horde</option>
+                    <option value="fel">🟢 Fel</option>
+                </select>
+                <select id="lang-selector" style="width: auto;">
+                    <option value="es">ES</option>
+                    <option value="en">EN</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="ad-banner">
+            <span>[Espacio Publicitario / Google AdSense]</span>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="tab-calculator">🧮 Calculadora</button>
+            <button class="tab-btn" data-tab="tab-budget">💰 Presupuesto</button>
+            <button class="tab-btn" data-tab="tab-flips">📈 Flips</button>
+            <button class="tab-btn" data-tab="tab-session">📊 Sesión</button>
+        </div>
+
+        <div class="realm-config-grid">
+            <div class="control-group">
+                <label>Región:</label>
+                <select id="region-selector">
+                    <option value="us">US (América)</option>
+                    <option value="eu">EU (Europa)</option>
+                    <option value="kr">KR (Corea)</option>
+                    <option value="tw">TW (Taiwán)</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label id="lbl-realm">Servidor de Juego:</label>
+                <select id="realm-selector">
+                    <option value="" id="opt-default-realm">Selecciona tu servidor...</option>
+                    <option value="quelthalas">Quel'Thalas (US)</option>
+                    <option value="ragnaros">Ragnaros (US)</option>
+                    <option value="sanguino">Sanguino (EU - ES)</option>
+                    <option value="dun-morogh">Dun Morogh (EU - FR)</option>
+                    <option value="blackhand">Blackhand (EU - DE)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 1: CALCULADORA -->
+        <div id="tab-calculator" class="tab-content active">
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label id="lbl-craft-qty">Cantidad:</label>
+                    <select id="craft-qty-multiplier">
+                        <option value="1">x1 Lote</option>
+                        <option value="5">x5 Lotes</option>
+                        <option value="10">x10 Lotes</option>
+                        <option value="20">x20 Lotes</option>
+                        <option value="50">x50 Lotes</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label id="lbl-search">Buscar Receta:</label>
+                    <input type="text" id="recipe-search" placeholder="Ej. Frasco, Gema...">
+                </div>
+            </div>
+
+            <div class="professions-nav" id="professions-nav">
+                <button class="prof-btn active" data-prof="all">Todas</button>
+                <button class="prof-btn" data-prof="favorites">⭐ Favoritas</button>
+                <button class="prof-btn" data-prof="alchemy">Alquimia</button>
+                <button class="prof-btn" data-prof="jewelcrafting">Joyería</button>
+                <button class="prof-btn" data-prof="blacksmithing">Herrería</button>
+                <button class="prof-btn" data-prof="enchanting">Encantamiento</button>
+                <button class="prof-btn" data-prof="leatherworking">Peletería</button>
+                <button class="prof-btn" data-prof="tailoring">Sastrería</button>
+                <button class="prof-btn" data-prof="engineering">Ingeniería</button>
+            </div>
+
+            <div class="control-group" style="margin-bottom: 15px;">
+                <label id="lbl-recipe-select">Receta Específica:</label>
+                <select id="recipe-selector">
+                    <option value="">Selecciona una receta...</option>
+                </select>
+            </div>
+
+            <button id="calculate-btn" class="main-action-btn">Calcular Ganancias</button>
+            <div id="results-container">
+                <p id="default-text" style="color: var(--text-muted); text-align: center; margin-top: 30px; font-size: 0.85rem;">Selecciona un servidor y una receta...</p>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 2: PRESUPUESTO -->
+        <div id="tab-budget" class="tab-content">
+            <div class="control-group" style="margin-bottom: 15px;">
+                <label>Oro Disponible:</label>
+                <input type="number" id="budget-input" placeholder="Ej. 10000" value="10000">
+            </div>
+            <button id="btn-run-budget" class="main-action-btn">Buscar Rentables</button>
+            <div id="budget-results" style="margin-top: 15px; overflow-x: auto;"></div>
+        </div>
+
+        <!-- PESTAÑA 3: FLIPS -->
+        <div id="tab-flips" class="tab-content">
+            <button id="btn-run-flips" class="main-action-btn">Escanear Flips</button>
+            <div id="flips-results" style="margin-top: 15px; overflow-x: auto;"></div>
+        </div>
+
+        <!-- PESTAÑA 4: SESIÓN -->
+        <div id="tab-session" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 style="margin: 0; color: var(--accent-gold); font-size: 1rem;">Resumen de Crafteos</h3>
+                <button id="btn-clear-session" class="secondary-btn" style="width: auto; padding: 6px 10px; font-size: 0.75rem;">Vaciar</button>
+            </div>
+            <div id="session-summary-box" class="summary-grid" style="margin-bottom: 15px; grid-template-columns: repeat(2, 1fr);">
+                <div class="summary-box"><span>Registrados</span><strong id="session-count">0</strong></div>
+                <div class="summary-box"><span>Inversión</span><strong style="color: var(--red);" id="session-cost">0.00g</strong></div>
+            </div>
+            <div id="session-list" style="overflow-x: auto;"></div>
+        </div>
+
+        <!-- PIE DE PÁGINA CON AFILIADO Y ENLACES LEGALES (ADSENSE) -->
+        <footer style="margin-top: 35px; border-top: 1px solid var(--border-color); padding-top: 20px; text-align: center; color: var(--text-muted); font-size: 0.78rem;">
+            <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95)); border: 1px solid rgba(245, 158, 11, 0.4); padding: 18px; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.5), inset 0 0 15px rgba(245, 158, 11, 0.05); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent-gold);"></div>
+                
+                <p style="margin: 0 0 6px 0; color: var(--accent-gold); font-weight: 800; font-size: 0.95rem; letter-spacing: 0.5px;">⚡ ¿Cansado del Lag en las Bandas y Mazmorras?</p>
+                <p style="margin: 0 0 14px 0; color: #cbd5e1; font-size: 0.85rem;">Estabiliza tu conexión a los servidores de Blizzard con <strong style="color: #fff;">ExitLag</strong> y mejora tu rendimiento al tradear y craftear.</p>
+                
+                <a href="https://www.exitlag.com/refer/10374282" target="_blank" style="display: inline-block; background: linear-gradient(135deg, var(--accent-gold), #b45309); color: #060913; padding: 10px 20px; border-radius: 8px; font-weight: 800; text-decoration: none; font-size: 0.88rem; box-shadow: 0 4px 15px var(--accent-glow);">
+                    🚀 Activar 20% de Descuento en ExitLag
+                </a>
+            </div>
+
+            <!-- ENLACES LEGALES OBLIGATORIOS PARA GOOGLE ADSENSE -->
+            <div style="margin-bottom: 12px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <a href="#" onclick="openLegal('privacy'); return false;" style="color: var(--text-muted); text-decoration: underline;">Política de Privacidad</a>
+                <a href="#" onclick="openLegal('terms'); return false;" style="color: var(--text-muted); text-decoration: underline;">Aviso Legal & Términos</a>
+            </div>
+
+            <p style="margin: 0;">Guía de Profesiones y Economía WoW no está afiliado a Blizzard Entertainment. World of Warcraft es una marca registrada de Blizzard Entertainment, Inc.</p>
+        </footer>
+    </div>
+
+    <!-- VENTANA MODAL PARA LAS POLÍTICAS LEGALES -->
+    <div id="legalModal" class="legal-modal">
+        <div class="legal-content">
+            <h3 id="legal-title">Título</h3>
+            <div id="legal-text">Contenido...</div>
+            <br>
+            <button onclick="closeLegal()" class="main-action-btn" style="padding: 8px;">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        function openLegal(type) {
+            const modal = document.getElementById('legalModal');
+            const title = document.getElementById('legal-title');
+            const text = document.getElementById('legal-text');
+            
+            if (type === 'privacy') {
+                title.innerText = "Política de Privacidad";
+                text.innerHTML = `
+                    <p>En <strong>Guía de Profesiones y Economía WoW</strong> respetamos tu privacidad. Este sitio web utiliza servicios de terceros como Google AdSense para mostrar anuncios basados en tus visitas anteriores a este u otros sitios web.</p>
+                    <p>Las cookies de publicidad de Google permiten a Google y a sus socios mostrar anuncios a nuestros usuarios basados en su visita a sus sitios y/o a otros sitios de Internet.</p>
+                    <p>Los usuarios pueden inhabilitar la publicidad personalizada accediendo a la <a href="https://www.google.com/settings/ads" target="_blank" style="color: var(--accent-gold);">Configuración de anuncios</a>.</p>
+                `;
+            } else {
+                title.innerText = "Aviso Legal y Términos de Uso";
+                text.innerHTML = `
+                    <p><strong>1. Propiedad Intelectual:</strong> Guía de Profesiones y Economía WoW es una herramienta independiente creada por fans para la comunidad de World of Warcraft. No está afiliada, respaldada ni patrocinada por Blizzard Entertainment.</p>
+                    <p><strong>2. Uso de Datos:</strong> Las cotizaciones y cálculos mostrados se basan en estimaciones del mercado de la Casa de Subastas y pueden variar según el servidor y momento de juego.</p>
+                    <p><strong>3. Enlaces de Afiliados:</strong> Este sitio incluye enlaces de recomendación de pago (ExitLag) por los cuales el creador puede percibir una comisión sin costo adicional para el usuario.</p>
+                `;
+            }
+            modal.style.display = 'flex';
+        }
+
+        function closeLegal() {
+            document.getElementById('legalModal').style.display = 'none';
+        }
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
