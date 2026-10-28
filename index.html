@@ -80,7 +80,6 @@
             gap: 6px;
             align-items: center;
             flex-wrap: wrap;
-            width: 100%;
         }
 
         .donate-btn {
@@ -95,8 +94,6 @@
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            flex: 1;
-            justify-content: center;
         }
 
         .ad-banner {
@@ -221,7 +218,6 @@
             margin-top: 20px;
             width: 100%;
             box-sizing: border-box;
-            overflow-x: hidden;
         }
 
         .table-responsive {
@@ -357,33 +353,6 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* Estilos para la ventana modal legal (AdSense) */
-        .legal-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(6, 9, 19, 0.85);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            box-sizing: border-box;
-        }
-        .legal-content {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            color: var(--text-main);
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-        .legal-content h3 { color: var(--accent-gold); margin-top: 0; }
-
         @media (min-width: 768px) {
             body { padding: 30px; }
             .container { padding: 30px; border-radius: 18px; }
@@ -408,14 +377,15 @@
         <header>
             <h1 id="app-title">Guía de Profesiones y Economía WoW</h1>
             <div class="header-controls">
-                <a href="https://ko-fi.com/vallejosemmiiii" target="_blank" class="donate-btn">☕ Donar</a>
+                <a href="https://ko-fi.com/vallejosemmiiii" target="_blank" class="donate-btn" id="btn-donate">☕ Donar</a>
                 <select id="theme-selector" style="width: auto;" title="Tema Visual">
                     <option value="goblin">🟡 Goblin</option>
                     <option value="alliance">🔵 Alliance</option>
                     <option value="horde">🔴 Horde</option>
                     <option value="fel">🟢 Fel</option>
                 </select>
-                <select id="lang-selector" style="width: auto;">
+                <!-- SELECTOR DE IDIOMAS -->
+                <select id="lang-selector" style="width: auto;" title="Idioma / Language">
                     <option value="es">ES</option>
                     <option value="en">EN</option>
                 </select>
@@ -423,19 +393,19 @@
         </header>
 
         <div class="ad-banner">
-            <span>[Espacio Publicitario / Google AdSense]</span>
+            <span id="ad-text">[Espacio Publicitario / Google AdSense]</span>
         </div>
 
         <div class="nav-tabs">
-            <button class="tab-btn active" data-tab="tab-calculator">🧮 Calculadora</button>
-            <button class="tab-btn" data-tab="tab-budget">💰 Presupuesto</button>
-            <button class="tab-btn" data-tab="tab-flips">📈 Flips</button>
-            <button class="tab-btn" data-tab="tab-session">📊 Sesión</button>
+            <button class="tab-btn active" data-tab="tab-calculator" id="nav-calc">🧮 Calculadora</button>
+            <button class="tab-btn" data-tab="tab-budget" id="nav-budget">💰 Presupuesto</button>
+            <button class="tab-btn" data-tab="tab-flips" id="nav-flips">📈 Flips</button>
+            <button class="tab-btn" data-tab="tab-session" id="nav-session">📊 Sesión</button>
         </div>
 
         <div class="realm-config-grid">
             <div class="control-group">
-                <label>Región:</label>
+                <label id="lbl-region">Región:</label>
                 <select id="region-selector">
                     <option value="us">US (América)</option>
                     <option value="eu">EU (Europa)</option>
@@ -476,21 +446,21 @@
             </div>
 
             <div class="professions-nav" id="professions-nav">
-                <button class="prof-btn active" data-prof="all">Todas</button>
-                <button class="prof-btn" data-prof="favorites">⭐ Favoritas</button>
-                <button class="prof-btn" data-prof="alchemy">Alquimia</button>
-                <button class="prof-btn" data-prof="jewelcrafting">Joyería</button>
-                <button class="prof-btn" data-prof="blacksmithing">Herrería</button>
-                <button class="prof-btn" data-prof="enchanting">Encantamiento</button>
-                <button class="prof-btn" data-prof="leatherworking">Peletería</button>
-                <button class="prof-btn" data-prof="tailoring">Sastrería</button>
-                <button class="prof-btn" data-prof="engineering">Ingeniería</button>
+                <button class="prof-btn active" data-prof="all" id="prof-all">Todas</button>
+                <button class="prof-btn" data-prof="favorites" id="prof-fav">⭐ Favoritas</button>
+                <button class="prof-btn" data-prof="alchemy" id="prof-alc">Alquimia</button>
+                <button class="prof-btn" data-prof="jewelcrafting" id="prof-jew">Joyería</button>
+                <button class="prof-btn" data-prof="blacksmithing" id="prof-bs">Herrería</button>
+                <button class="prof-btn" data-prof="enchanting" id="prof-enc">Encantamiento</button>
+                <button class="prof-btn" data-prof="leatherworking" id="prof-lw">Peletería</button>
+                <button class="prof-btn" data-prof="tailoring" id="prof-tail">Sastrería</button>
+                <button class="prof-btn" data-prof="engineering" id="prof-eng">Ingeniería</button>
             </div>
 
             <div class="control-group" style="margin-bottom: 15px;">
                 <label id="lbl-recipe-select">Receta Específica:</label>
                 <select id="recipe-selector">
-                    <option value="">Selecciona una receta...</option>
+                    <option value="" id="opt-default-recipe">Selecciona una receta...</option>
                 </select>
             </div>
 
@@ -503,7 +473,7 @@
         <!-- PESTAÑA 2: PRESUPUESTO -->
         <div id="tab-budget" class="tab-content">
             <div class="control-group" style="margin-bottom: 15px;">
-                <label>Oro Disponible:</label>
+                <label id="lbl-budget-gold">Oro Disponible:</label>
                 <input type="number" id="budget-input" placeholder="Ej. 10000" value="10000">
             </div>
             <button id="btn-run-budget" class="main-action-btn">Buscar Rentables</button>
@@ -519,75 +489,134 @@
         <!-- PESTAÑA 4: SESIÓN -->
         <div id="tab-session" class="tab-content">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h3 style="margin: 0; color: var(--accent-gold); font-size: 1rem;">Resumen de Crafteos</h3>
+                <h3 style="margin: 0; color: var(--accent-gold); font-size: 1rem;" id="session-title">Resumen de Crafteos</h3>
                 <button id="btn-clear-session" class="secondary-btn" style="width: auto; padding: 6px 10px; font-size: 0.75rem;">Vaciar</button>
             </div>
             <div id="session-summary-box" class="summary-grid" style="margin-bottom: 15px; grid-template-columns: repeat(2, 1fr);">
-                <div class="summary-box"><span>Registrados</span><strong id="session-count">0</strong></div>
-                <div class="summary-box"><span>Inversión</span><strong style="color: var(--red);" id="session-cost">0.00g</strong></div>
+                <div class="summary-box"><span id="session-lbl-reg">Registrados</span><strong id="session-count">0</strong></div>
+                <div class="summary-box"><span id="session-lbl-cost">Inversión</span><strong style="color: var(--red);" id="session-cost">0.00g</strong></div>
             </div>
             <div id="session-list" style="overflow-x: auto;"></div>
-        </div>
-
-        <!-- PIE DE PÁGINA CON AFILIADO Y ENLACES LEGALES (ADSENSE) -->
-        <footer style="margin-top: 35px; border-top: 1px solid var(--border-color); padding-top: 20px; text-align: center; color: var(--text-muted); font-size: 0.78rem;">
-            <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95)); border: 1px solid rgba(245, 158, 11, 0.4); padding: 18px; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.5), inset 0 0 15px rgba(245, 158, 11, 0.05); position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent-gold);"></div>
-                
-                <p style="margin: 0 0 6px 0; color: var(--accent-gold); font-weight: 800; font-size: 0.95rem; letter-spacing: 0.5px;">⚡ ¿Cansado del Lag en las Bandas y Mazmorras?</p>
-                <p style="margin: 0 0 14px 0; color: #cbd5e1; font-size: 0.85rem;">Estabiliza tu conexión a los servidores de Blizzard con <strong style="color: #fff;">ExitLag</strong> y mejora tu rendimiento al tradear y craftear.</p>
-                
-                <a href="https://www.exitlag.com/refer/10374282" target="_blank" style="display: inline-block; background: linear-gradient(135deg, var(--accent-gold), #b45309); color: #060913; padding: 10px 20px; border-radius: 8px; font-weight: 800; text-decoration: none; font-size: 0.88rem; box-shadow: 0 4px 15px var(--accent-glow);">
-                    🚀 Activar 20% de Descuento en ExitLag
-                </a>
-            </div>
-
-            <!-- ENLACES LEGALES OBLIGATORIOS PARA GOOGLE ADSENSE -->
-            <div style="margin-bottom: 12px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                <a href="#" onclick="openLegal('privacy'); return false;" style="color: var(--text-muted); text-decoration: underline;">Política de Privacidad</a>
-                <a href="#" onclick="openLegal('terms'); return false;" style="color: var(--text-muted); text-decoration: underline;">Aviso Legal & Términos</a>
-            </div>
-
-            <p style="margin: 0;">Guía de Profesiones y Economía WoW no está afiliado a Blizzard Entertainment. World of Warcraft es una marca registrada de Blizzard Entertainment, Inc.</p>
-        </footer>
-    </div>
-
-    <!-- VENTANA MODAL PARA LAS POLÍTICAS LEGALES -->
-    <div id="legalModal" class="legal-modal">
-        <div class="legal-content">
-            <h3 id="legal-title">Título</h3>
-            <div id="legal-text">Contenido...</div>
-            <br>
-            <button onclick="closeLegal()" class="main-action-btn" style="padding: 8px;">Cerrar</button>
         </div>
     </div>
 
     <script>
-        function openLegal(type) {
-            const modal = document.getElementById('legalModal');
-            const title = document.getElementById('legal-title');
-            const text = document.getElementById('legal-text');
-            
-            if (type === 'privacy') {
-                title.innerText = "Política de Privacidad";
-                text.innerHTML = `
-                    <p>En <strong>Guía de Profesiones y Economía WoW</strong> respetamos tu privacidad. Este sitio web utiliza servicios de terceros como Google AdSense para mostrar anuncios basados en tus visitas anteriores a este u otros sitios web.</p>
-                    <p>Las cookies de publicidad de Google permiten a Google y a sus socios mostrar anuncios a nuestros usuarios basados en su visita a sus sitios y/o a otros sitios de Internet.</p>
-                    <p>Los usuarios pueden inhabilitar la publicidad personalizada accediendo a la <a href="https://www.google.com/settings/ads" target="_blank" style="color: var(--accent-gold);">Configuración de anuncios</a>.</p>
-                `;
-            } else {
-                title.innerText = "Aviso Legal y Términos de Uso";
-                text.innerHTML = `
-                    <p><strong>1. Propiedad Intelectual:</strong> Guía de Profesiones y Economía WoW es una herramienta independiente creada por fans para la comunidad de World of Warcraft. No está afiliada, respaldada ni patrocinada por Blizzard Entertainment.</p>
-                    <p><strong>2. Uso de Datos:</strong> Las cotizaciones y cálculos mostrados se basan en estimaciones del mercado de la Casa de Subastas y pueden variar según el servidor y momento de juego.</p>
-                    <p><strong>3. Enlaces de Afiliados:</strong> Este sitio incluye enlaces de recomendación de pago (ExitLag) por los cuales el creador puede percibir una comisión sin costo adicional para el usuario.</p>
-                `;
+        // Sistema de Traducción Idiomas (ES / EN)
+        const translations = {
+            es: {
+                title: "Guía de Profesiones y Economía WoW",
+                donate: "☕ Donar",
+                adText: "[Espacio Publicitario / Google AdSense]",
+                navCalc: "🧮 Calculadora",
+                navBudget: "💰 Presupuesto",
+                navFlips: "📈 Flips",
+                navSession: "📊 Sesión",
+                lblRegion: "Región:",
+                lblRealm: "Servidor de Juego:",
+                optDefaultRealm: "Selecciona tu servidor...",
+                lblCraftQty: "Cantidad:",
+                lblSearch: "Buscar Receta:",
+                searchPlaceholder: "Ej. Frasco, Gema...",
+                profAll: "Todas",
+                profFav: "⭐ Favoritas",
+                profAlc: "Alquimia",
+                profJew: "Joyería",
+                profBs: "Herrería",
+                profEnc: "Encantamiento",
+                profLw: "Peletería",
+                profTail: "Sastrería",
+                profEng: "Ingeniería",
+                lblRecipeSelect: "Receta Específica:",
+                optDefaultRecipe: "Selecciona una receta...",
+                calcBtn: "Calcular Ganancias",
+                defaultText: "Selecciona un servidor y una receta...",
+                lblBudgetGold: "Oro Disponible:",
+                btnRunBudget: "Buscar Rentables",
+                btnRunFlips: "Escanear Flips",
+                sessionTitle: "Resumen de Crafteos",
+                sessionClear: "Vaciar",
+                sessionReg: "Registrados",
+                sessionCost: "Inversión"
+            },
+            en: {
+                title: "WoW Professions & Economy Guide",
+                donate: "☕ Donate",
+                adText: "[Ad Space / Google AdSense]",
+                navCalc: "🧮 Calculator",
+                navBudget: "💰 Budget",
+                navFlips: "📈 Flips",
+                navSession: "📊 Session",
+                lblRegion: "Region:",
+                lblRealm: "Game Realm:",
+                optDefaultRealm: "Select your realm...",
+                lblCraftQty: "Quantity:",
+                lblSearch: "Search Recipe:",
+                searchPlaceholder: "Ex. Flask, Gem...",
+                profAll: "All",
+                profFav: "⭐ Favorites",
+                profAlc: "Alchemy",
+                profJew: "Jewelcrafting",
+                profBs: "Blacksmithing",
+                profEnc: "Enchanting",
+                profLw: "Leatherworking",
+                profTail: "Tailoring",
+                profEng: "Engineering",
+                lblRecipeSelect: "Specific Recipe:",
+                optDefaultRecipe: "Select a recipe...",
+                calcBtn: "Calculate Profits",
+                defaultText: "Select a realm and recipe...",
+                lblBudgetGold: "Available Gold:",
+                btnRunBudget: "Find Profitable",
+                btnRunFlips: "Scan Flips",
+                sessionTitle: "Crafting Summary",
+                sessionClear: "Clear",
+                sessionReg: "Registered",
+                sessionCost: "Investment"
             }
-            modal.style.display = 'flex';
-        }
+        };
 
-        function closeLegal() {
-            document.getElementById('legalModal').style.display = 'none';
+        const langSelector = document.getElementById('lang-selector');
+        langSelector.addEventListener('change', (e) => {
+            setLanguage(e.target.value);
+        });
+
+        function setLanguage(lang) {
+            const t = translations[lang] || translations.es;
+            document.getElementById('app-title').innerText = t.title;
+            document.title = t.title;
+            document.getElementById('btn-donate').innerHTML = t.donate;
+            document.getElementById('ad-text').innerText = t.adText;
+            document.getElementById('nav-calc').innerText = t.navCalc;
+            document.getElementById('nav-budget').innerText = t.navBudget;
+            document.getElementById('nav-flips').innerText = t.navFlips;
+            document.getElementById('nav-session').innerText = t.navSession;
+            document.getElementById('lbl-region').innerText = t.lblRegion;
+            document.getElementById('lbl-realm').innerText = t.lblRealm;
+            document.getElementById('opt-default-realm').innerText = t.optDefaultRealm;
+            document.getElementById('lbl-craft-qty').innerText = t.lblCraftQty;
+            document.getElementById('lbl-search').innerText = t.lblSearch;
+            document.getElementById('recipe-search').placeholder = t.searchPlaceholder;
+            document.getElementById('prof-all').innerText = t.profAll;
+            document.getElementById('prof-fav').innerText = t.profFav;
+            document.getElementById('prof-alc').innerText = t.profAlc;
+            document.getElementById('prof-jew').innerText = t.profJew;
+            document.getElementById('prof-bs').innerText = t.profBs;
+            document.getElementById('prof-enc').innerText = t.profEnc;
+            document.getElementById('prof-lw').innerText = t.profLw;
+            document.getElementById('prof-tail').innerText = t.profTail;
+            document.getElementById('prof-eng').innerText = t.profEng;
+            document.getElementById('lbl-recipe-select').innerText = t.lblRecipeSelect;
+            document.getElementById('opt-default-recipe').innerText = t.optDefaultRecipe;
+            document.getElementById('calculate-btn').innerText = t.calcBtn;
+            const defText = document.getElementById('default-text');
+            if(defText) defText.innerText = t.defaultText;
+            document.getElementById('lbl-budget-gold').innerText = t.lblBudgetGold;
+            document.getElementById('btn-run-budget').innerText = t.btnRunBudget;
+            document.getElementById('btn-run-flips').innerText = t.btnRunFlips;
+            document.getElementById('session-title').innerText = t.sessionTitle;
+            document.getElementById('btn-clear-session').innerText = t.sessionClear;
+            document.getElementById('session-lbl-reg').innerText = t.sessionReg;
+            document.getElementById('session-lbl-cost').innerText = t.sessionCost;
         }
     </script>
 
